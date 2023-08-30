@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 using dotnetapp.Models;
-// using dotnetapp.Controllers;
+using dotnetapp.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using Moq;
@@ -24,6 +24,8 @@ namespace dotnetapp.Tests
         private Assembly _assembly1;
         private string relativeFolderPath; // Set this to the relative path of the folder you want to check
         private string fileName; 
+        private Mock<OrdersDbContext> _mockContext;
+        private OrderController _controller;
 
         // private PostController _postcontroller;
         // private List<Post> _fakePosts;
@@ -32,6 +34,9 @@ namespace dotnetapp.Tests
         [SetUp]
         public void Setup()
         {
+            
+            // _mockContext = new Mock<OrdersDbContext>();
+            // _controller = new OrderController(_mockContext.Object);
             //_postcontroller = new PostController();
            
         }
@@ -133,6 +138,36 @@ namespace dotnetapp.Tests
             bool viewsFolderExists = Directory.Exists(@"/home/coder/project/workspace/week2_day6_s2_3_client/dotnetapp/Migrations");
 
             Assert.IsTrue(viewsFolderExists, "Post folder does not exist.");
+        }
+
+        [Test]
+        public void Session_3_Test_DisplayCustomers_Action()
+        {
+            Assembly assembly = Assembly.Load("dotnetapp");
+            controllerType = assembly.GetType("dotnetapp.Controllers.OrderController");
+            var detailsMethod = GetMethod(controllerType, "DisplayCustomers", new Type[] {  });
+
+            Assert.NotNull(detailsMethod);
+        }
+
+        [Test]
+        public void Session_3_Test_DisplayProductsWithCategories_Action()
+        {
+            Assembly assembly = Assembly.Load("dotnetapp");
+            controllerType = assembly.GetType("dotnetapp.Controllers.OrderController");
+            var detailsMethod = GetMethod(controllerType, "DisplayProductsWithCategories", new Type[] {  });
+
+            Assert.NotNull(detailsMethod);
+        }
+
+        [Test]
+        public void Session_3_Test_DisplayOrderDetails_Action()
+        {
+            Assembly assembly = Assembly.Load("dotnetapp");
+            controllerType = assembly.GetType("dotnetapp.Controllers.OrderController");
+            var detailsMethod = GetMethod(controllerType, "DisplayOrderDetails", new Type[] {  });
+
+            Assert.NotNull(detailsMethod);
         }
     }
 }
